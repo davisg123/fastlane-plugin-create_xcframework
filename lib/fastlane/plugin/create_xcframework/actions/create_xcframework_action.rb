@@ -15,7 +15,6 @@ module Fastlane
         if Helper.xcode_at_least?('11.0.0')
           verify_delicate_params(params)
           params[:destinations] = update_destinations(params)
-          params[:xcargs] = update_xcargs(params)
 
           @xchelper = Helper::CreateXcframeworkHelper.new(params)
 
