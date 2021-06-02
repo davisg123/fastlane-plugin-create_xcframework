@@ -15,6 +15,7 @@ module Fastlane
         if Helper.xcode_at_least?('11.0.0')
           verify_delicate_params(params)
           params[:destinations] = update_destinations(params)
+          params[:xcargs] = update_xcargs(params)
 
           @xchelper = Helper::CreateXcframeworkHelper.new(params)
 
@@ -130,10 +131,9 @@ module Fastlane
         FastlaneCore::UI.important('Overwriting SKIP_INSTALL and BUILD_LIBRARY_FOR_DISTRIBUTION options')
         if params[:xcargs]
           params[:xcargs].gsub!(/SKIP_INSTALL(=|\s+)(YES|NO)/, '')
-          params[:xcargs].gsub!(/BUILD_LIBRARY_FOR_DISTRIBUTION(=|\s+)(YES|NO)/, '')
           params[:xcargs] += ' '
         end
-        xcargs = ['SKIP_INSTALL=NO', 'BUILD_LIBRARY_FOR_DISTRIBUTION=YES']
+        xcargs = ['SKIP_INSTALL=NO']
 
         if params[:enable_bitcode] != false
           params[:xcargs].gsub!(/ENABLE_BITCODE(=|\s+)(YES|NO)/, '') if params[:xcargs]
